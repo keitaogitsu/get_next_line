@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:43:42 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/02 13:27:02 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:33:36 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ char	*ft_strchr(const char *s, int c)
 	size_t	i;
 
 	i = 0;
+	if (s == NULL)
+		return (NULL);
 	while (s[i])
 	{
 		if (s[i] == (char)c)
@@ -38,29 +40,29 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
-	size_t	i;
-	size_t	j;
+	char	*start_str;
 
+	if (s1 == NULL)
+	{
+		s1 = (char *)malloc(1 * sizeof(char));
+		if (s1 == NULL)
+			return (NULL);
+		s1[0] = '\0';
+	}
 	if (!s1 || !s2)
 		return (NULL);
 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	start_str = str;
 	if (str == NULL)
 		return (NULL);
-	i = 0;
-	while (i < ft_strlen(s1))
-	{
-		str[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (j < ft_strlen(s2))
-	{
-		str[i + j] = s2[j];
-		j++;
-	}
-	str[i + j] = '\0';
-	return (str);
+	while (*s1)
+		*str++ = *s1++;
+	while (*s2)
+		*str++ = *s2++;
+	*str = '\0';
+	return (start_str);
 }
+

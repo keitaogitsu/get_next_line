@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 19:59:48 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/02 14:33:10 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/02 17:53:36 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ char	*ft_read(int fd, char *save)
 	tmp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (tmp == NULL)
 		return (NULL);
-	while (ft_strchr(save, '\n') == NULL && read_size != 0)
+	while (ft_strchr(save, '\n') == NULL)
 	{
 		read_size = read(fd, tmp, BUFFER_SIZE);
-		if (read_size == -1)
+		if (read_size == -1 || read_size == 0)
 		{
 			free(tmp);
 			return (NULL);
@@ -47,6 +47,8 @@ char	*ft_get_line(char *save)
 	size_t	count;
 	char	*rtn_line;
 
+	if (*save == '\0')
+		return (NULL);
 	i = 0;
 	count = ft_strchr(save, '\n') - save;
 	rtn_line = (char *)malloc((count + 2) + sizeof(char));
@@ -96,3 +98,22 @@ char	*get_next_line(int fd)
 	save = ft_save(save);
 	return (line);
 }
+
+// #include <stdio.h>
+// #include <fcntl.h>
+
+// int main(void)
+// {
+// 	int		fd;
+// 	char	*line;
+
+// 	line = "";
+// 	fd = open("./test.txt", O_RDONLY);
+// 	while (line)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("> %s", line);
+// 		free(line);
+// 	}
+// 	return (0);
+// }
