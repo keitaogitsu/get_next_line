@@ -6,11 +6,21 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:43:42 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/02/27 14:14:02 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/02 13:27:02 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
 
 char	*ft_strchr(const char *s, int c)
 {
