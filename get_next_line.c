@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 19:59:48 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/02 17:53:36 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/07 13:06:19 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*ft_read(int fd, char *save)
 {
 	char	*tmp;
-	char	*save_free;
 	int		read_size;
+	char	*save_free;
 
 	tmp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (tmp == NULL)
@@ -24,11 +24,13 @@ char	*ft_read(int fd, char *save)
 	while (ft_strchr(save, '\n') == NULL)
 	{
 		read_size = read(fd, tmp, BUFFER_SIZE);
-		if (read_size == -1 || read_size == 0)
+		if (read_size == -1)
 		{
 			free(tmp);
 			return (NULL);
 		}
+		else if (read_size == 0)
+			break ;
 		else
 		{
 			tmp[read_size] = '\0';
@@ -49,17 +51,23 @@ char	*ft_get_line(char *save)
 
 	if (*save == '\0')
 		return (NULL);
-	i = 0;
-	count = ft_strchr(save, '\n') - save;
+	count = 0;
+	while (save[count] && save[count] != '\n')
+		count++;
 	rtn_line = (char *)malloc((count + 2) + sizeof(char));
 	if (rtn_line == NULL)
 		return (NULL);
-	while (save[i] != '\n')
+	i = 0;
+	while (save[i] && save[i] != '\n')
 	{
 		rtn_line[i] = save[i];
 		i++;
 	}
-	rtn_line[i++] = '\n';
+	if (save[i] == '\n')
+	{
+		rtn_line[i] = save[i];
+		i++;
+	}
 	rtn_line[i] = '\0';
 	return (rtn_line);
 }
@@ -74,15 +82,21 @@ char	*ft_save(char *save)
 	i = 0;
 	while (save[i] && save[i] != '\n')
 		i++;
-	i++;
+	if (!save[i])
+	{
+		free(save);
+		return (NULL);
+	}
 	save_size = ft_strlen(save);
 	rtn = (char *)malloc((save_size - i + 1) * sizeof(char));
 	if (rtn == NULL)
 		return (NULL);
 	j = 0;
+	i++;
 	while (i < save_size)
 		rtn[j++] = save[i++];
 	rtn[j] = '\0';
+	free(save);
 	return (rtn);
 }
 

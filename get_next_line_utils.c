@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:43:42 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/02 17:33:36 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/06 22:28:28 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,11 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (str == NULL)
 		return (NULL);
 	while (*s1)
-		*str++ = *s1++;
+		*(str++) = *(s1++);
 	while (*s2)
-		*str++ = *s2++;
+		*(str++) = *(s2++);
 	*str = '\0';
+	// free(s1);
 	return (start_str);
 }
 
