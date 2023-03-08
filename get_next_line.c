@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 19:59:48 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/07 13:06:19 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/07 15:35:53 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ char	*ft_read(int fd, char *save)
 			tmp[read_size] = '\0';
 			save_free = save;
 			save = ft_strjoin(save, tmp);
+			if (save == NULL)
+			{
+				free(tmp);
+				return (NULL);
+			}
 			free(save_free);
 		}
 	}
@@ -90,7 +95,10 @@ char	*ft_save(char *save)
 	save_size = ft_strlen(save);
 	rtn = (char *)malloc((save_size - i + 1) * sizeof(char));
 	if (rtn == NULL)
+	{
+		free(save);
 		return (NULL);
+	}
 	j = 0;
 	i++;
 	while (i < save_size)

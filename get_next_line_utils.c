@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 12:43:42 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/06 22:28:28 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/08 12:12:55 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,21 @@ char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
 	char	*start_str;
+	int		flag;
 
-	if (s1 == NULL)
+	flag = 0;
+	if (s1 == NULL && s2 == NULL)
+		return (NULL);
+	if (s1 == NULL && s2 != NULL)
 	{
 		s1 = (char *)malloc(1 * sizeof(char));
 		if (s1 == NULL)
 			return (NULL);
 		s1[0] = '\0';
+		flag = 1;
 	}
-	if (!s1 || !s2)
-		return (NULL);
+	if (s1 != NULL && s2 == NULL)
+		return ((char *)s1);
 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	start_str = str;
 	if (str == NULL)
@@ -63,7 +68,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (*s2)
 		*(str++) = *(s2++);
 	*str = '\0';
-	// free(s1);
+	if (flag)
+		free(s1);
 	return (start_str);
 }
 
