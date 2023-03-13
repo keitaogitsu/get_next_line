@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 19:59:48 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/13 17:37:40 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/13 18:15:27 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,30 +112,30 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-#include <stdio.h>
-#include <fcntl.h>
+// #include <stdio.h>
+// #include <fcntl.h>
 
-int main(void)
-{
-	int		fd;
-	char	*line;
+// int main(void)
+// {
+// 	int		fd;
+// 	char	*line;
 
-	line = "";
-	fd = open("./test.txt", O_RDONLY);
-	while (line)
-	{
-		line = get_next_line(fd);
-		printf("> %s", line);
-		free(line);
-	}
-	// printf("\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n");
-	// fd = open("./test.txt", O_RDONLY);
-	// line = "";
-	// while (line)
-	// {
-	// 	line = get_next_line(fd);
-	// 	printf("> %s", line);
-	// 	free(line);
-	// }
-	return (0);
-}
+// 	line = "";
+// 	fd = open("./test.txt", O_RDONLY);
+// 	while (line)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("> %s", line);
+// 		free(line);
+// 	}
+// 	// printf("\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n");
+// 	// fd = open("./test.txt", O_RDONLY);
+// 	// line = "";
+// 	// while (line)
+// 	// {
+// 	// 	line = get_next_line(fd);
+// 	// 	printf("> %s", line);
+// 	// 	free(line);
+// 	// }
+// 	return (0);
+// }
