@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/26 19:59:48 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/13 17:37:40 by kogitsu          ###   ########.fr       */
+/*   Created: 2023/03/13 16:21:54 by kogitsu           #+#    #+#             */
+/*   Updated: 2023/03/13 18:00:36 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_read(int fd, char *save)
 {
-	char		*tmp;
+	char		*tmp[OPEN_MAX + 1];
 	ssize_t		read_size;
 	char		*save_free;
 
-	tmp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (tmp == NULL)
+	tmp[fd] = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (tmp[fd] == NULL)
 		return (NULL);
 	while (ft_strchr(save, '\n') == NULL)
 	{
-		read_size = read(fd, tmp, BUFFER_SIZE);
+		read_size = read(fd, tmp[fd], BUFFER_SIZE);
 		if (read_size == -1)
-			return (ft_free(tmp));
+			return (ft_free(tmp[fd]));
 		else if (read_size == 0)
 			break ;
-		tmp[read_size] = '\0';
+		tmp[fd][read_size] = '\0';
 		save_free = save;
-		save = ft_strjoin(save, tmp);
+		save = ft_strjoin(save, tmp[fd]);
 		if (save == NULL)
-			return (ft_free(tmp));
+			return (ft_free(tmp[fd]));
 		free(save_free);
 	}
-	free(tmp);
+	free(tmp[fd]);
 	return (save);
 }
 
@@ -102,7 +102,8 @@ char	*get_next_line(int fd)
 	char		*line;
 	static char	*save;
 
-	if (fd < 0 || BUFFER_SIZE < 0 || BUFFER_SIZE > SIZE_MAX)
+	if (fd < 0 || BUFFER_SIZE < 0 \
+		|| BUFFER_SIZE > SIZE_MAX || fd > OPEN_MAX)
 		return (NULL);
 	save = ft_read(fd, save);
 	if (save == NULL)
@@ -112,22 +113,34 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-#include <stdio.h>
-#include <fcntl.h>
+// #include <stdio.h>
+// #include <fcntl.h>
 
-int main(void)
-{
-	int		fd;
-	char	*line;
+// int main(void)
+// {
+// 	int		fd;
+// 	int		fd2;
+// 	char	*line;
+// 	char	*line2;
 
-	line = "";
-	fd = open("./test.txt", O_RDONLY);
-	while (line)
-	{
-		line = get_next_line(fd);
-		printf("> %s", line);
-		free(line);
-	}
+// 	line = "";
+// 	fd = open("./test.txt", O_RDONLY);
+// 	line = get_next_line(fd);
+// 	printf("fd> %s", line);
+// 	free(line);
+// 	system("leaks -q a.out");
+
+	// while (line || line2)
+	// {
+	// 	line = get_next_line(fd);
+	// 	printf("fd> %s", line);
+	// 	line2 = get_next_line(fd2);
+	// 	printf("fd2> %s", line2);
+	// 	free(line);
+	// 	free(line2);
+	// }
+	// system("leaks -q a.out");
+
 	// printf("\n\n>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n");
 	// fd = open("./test.txt", O_RDONLY);
 	// line = "";
@@ -137,5 +150,6 @@ int main(void)
 	// 	printf("> %s", line);
 	// 	free(line);
 	// }
-	return (0);
-}
+	// system("leaks -q a.out");
+// 	return (0);
+// }

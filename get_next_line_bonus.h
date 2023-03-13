@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/26 20:00:49 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/13 15:56:00 by kogitsu          ###   ########.fr       */
+/*   Created: 2023/03/13 16:23:09 by kogitsu           #+#    #+#             */
+/*   Updated: 2023/03/13 17:56:39 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 # include <unistd.h>
 # include <stdlib.h>
+# include <limits.h>
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE  4
+#  define BUFFER_SIZE  42
 # endif
 
 char	*get_next_line(int fd);
