@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:21:54 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/13 18:00:36 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/13 19:36:15 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 char	*ft_read(int fd, char *save)
 {
-	char		*tmp[OPEN_MAX + 1];
+	char		*tmp;
 	ssize_t		read_size;
 	char		*save_free;
 
-	tmp[fd] = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (tmp[fd] == NULL)
+	tmp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (tmp == NULL)
 		return (NULL);
 	while (ft_strchr(save, '\n') == NULL)
 	{
-		read_size = read(fd, tmp[fd], BUFFER_SIZE);
+		read_size = read(fd, tmp, BUFFER_SIZE);
 		if (read_size == -1)
-			return (ft_free(tmp[fd]));
+			return (ft_free(tmp));
 		else if (read_size == 0)
 			break ;
-		tmp[fd][read_size] = '\0';
+		tmp[read_size] = '\0';
 		save_free = save;
-		save = ft_strjoin(save, tmp[fd]);
+		save = ft_strjoin(save, tmp);
 		if (save == NULL)
-			return (ft_free(tmp[fd]));
+			return (ft_free(tmp));
 		free(save_free);
 	}
-	free(tmp[fd]);
+	free(tmp);
 	return (save);
 }
 
@@ -100,16 +100,16 @@ char	*ft_save(char *save)
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	*save;
+	static char	*save[OPEN_MAX + 1];
 
 	if (fd < 0 || BUFFER_SIZE < 0 \
 		|| BUFFER_SIZE > SIZE_MAX || fd > OPEN_MAX)
 		return (NULL);
-	save = ft_read(fd, save);
-	if (save == NULL)
+	save[fd] = ft_read(fd, save[fd]);
+	if (save[fd] == NULL)
 		return (NULL);
-	line = ft_get_line(save);
-	save = ft_save(save);
+	line = ft_get_line(save[fd]);
+	save[fd] = ft_save(save[fd]);
 	return (line);
 }
 

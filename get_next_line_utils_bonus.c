@@ -6,11 +6,17 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/13 16:22:32 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/13 16:45:52 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/13 19:53:14 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+char	*ft_free(char *str)
+{
+	free(str);
+	return (NULL);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -40,6 +46,15 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
+void	ft_join_content(char *str, char *s1, char *s2)
+{
+	while (*s1)
+		*(str++) = *(s1++);
+	while (*s2)
+		*(str++) = *(s2++);
+	*str = '\0';
+}
+
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*str;
@@ -57,20 +72,12 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	str = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
 	start_str = str;
-	if (str == NULL)
+	if (str == NULL && flag)
+		return (ft_free(s1));
+	else if (str == NULL)
 		return (NULL);
-	while (*s1)
-		*(str++) = *(s1++);
-	while (*s2)
-		*(str++) = *(s2++);
-	*str = '\0';
+	ft_join_content(str, s1, s2);
 	if (flag)
 		free(s1);
 	return (start_str);
-}
-
-char	*ft_free(char *str)
-{
-	free(str);
-	return (NULL);
 }

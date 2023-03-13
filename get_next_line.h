@@ -6,7 +6,7 @@
 /*   By: kogitsu <kogitsu@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/26 20:00:49 by kogitsu           #+#    #+#             */
-/*   Updated: 2023/03/13 15:56:00 by kogitsu          ###   ########.fr       */
+/*   Updated: 2023/03/13 19:58:35 by kogitsu          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ char	*ft_read(int fd, char *save);
 char	*ft_get_line(char *save);
 char	*ft_save(char *save);
 char	*ft_free(char *str);
+void	ft_join_content(char *str, char *s1, char *s2);
 
 #endif
